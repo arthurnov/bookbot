@@ -3,8 +3,27 @@ def main():
     text = get_book_text(book_path)
     num_words = get_num_words(text)
     letters = get_letter_count(text)
+    sorted = get_sorted(letters)
+    print(f"--- Begin report of {book_path} ---")
     print(f"{num_words} words found in the document")
-    print(letters)
+    print()
+
+    for item in sorted:
+        if not item["char"].isalpha():
+            continue
+        print(f"The '{item['char']}' character was found {item['num']} times")
+
+    print("--- End report ---")
+    
+def sort_on(d):
+    return d["num"]
+
+def get_sorted(letters):
+    sorted_list = []
+    for ch in letters:
+        sorted_list.append({"char": ch, "num": letters[ch]})
+    sorted_list.sort(reverse=True, key=sort_on)
+    return sorted_list
 
 def get_letter_count(text):
     lower_case = text.lower()
