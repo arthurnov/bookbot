@@ -1,5 +1,12 @@
+from stats import get_num_words
+import sys
+
 def main():
-    book_path = "books/frankenstein.txt"
+    # book_path = "books/frankenstein.txt"
+    if len(sys.argv) < 2:
+        print("Usage: python3 main.py <path_to_book>")
+        sys.exit(1)
+    book_path = sys.argv[1]
     text = get_book_text(book_path)
     num_words = get_num_words(text)
     letters = get_letter_count(text)
@@ -11,7 +18,7 @@ def main():
     for item in sorted:
         if not item["char"].isalpha():
             continue
-        print(f"The '{item['char']}' character was found {item['num']} times")
+        print(f"{item['char']}: {item['num']}")
 
     print("--- End report ---")
     
@@ -35,11 +42,6 @@ def get_letter_count(text):
             letters[letter] = 1
         
     return(letters)
-
-def get_num_words(text):
-    words = text.split()
-    return len(words)
-
 
 def get_book_text(path):
     with open(path) as f:
